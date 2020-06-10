@@ -1,8 +1,22 @@
+const isNotVisited = (path, visitedList, queue) => {
+  const isInVisitedList = visitedList.includes(path);
+  const isInQueue = queue.includes(path);
+  return !isInVisitedList && !isInQueue;
+};
+
+const addToQueue = (children, visitedList, queue) => {
+  children.forEach(path => {
+    if (isNotVisited(path, visitedList, queue)) queue.push(path);
+  });
+};
+
 const createList = content => {
   const list = {};
   content.forEach(pair => {
-    if (!list[pair[0]]) list[pair[0]] = [pair[1]];
-    else list[pair[0]].push(pair[1]);
+    const from = pair[0];
+    const to = pair[1];
+    if (!list[from]) list[from] = [to];
+    else list[from].push(to);
   });
   return list;
 };
@@ -16,10 +30,7 @@ const bfs = (pairs, source, target) => {
     const currentPath = queue.shift();
     if (currentPath === target) return true;
     visitedList.push(currentPath);
-    adjacentList[currentPath].forEach(path => {
-      if (!visitedList.includes(path) && !queue.includes(path))
-        queue.push(path);
-    });
+    addToQueue(adjacentList[currentPath],visitedList,queue);
   }
   return false;
 };
