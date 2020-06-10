@@ -30,7 +30,7 @@ const bfs = (pairs, source, target) => {
     const currentPath = queue.shift();
     if (currentPath === target) return true;
     visitedList.push(currentPath);
-    addToQueue(adjacentList[currentPath],visitedList,queue);
+    if(adjacentList[currentPath]) addToQueue(adjacentList[currentPath],visitedList,queue);
   }
   return false;
 };
