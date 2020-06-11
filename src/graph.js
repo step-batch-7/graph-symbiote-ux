@@ -5,9 +5,11 @@ const isNotVisited = (path, visitedList, queue) => {
 };
 
 const addToQueue = (children, visitedList, queue) => {
-  children.forEach(path => {
-    if (isNotVisited(path, visitedList, queue)) queue.push(path);
-  });
+  if (children) {
+    children.forEach(path => {
+      if (isNotVisited(path, visitedList, queue)) queue.push(path);
+    });
+  }
 };
 
 const createList = content => {
@@ -25,14 +27,12 @@ const bfs = (pairs, source, target) => {
   const adjacentList = createList(pairs);
   const visitedList = [];
   const queue = [];
-  if (adjacentList[source])
-    addToQueue(adjacentList[source], visitedList, queue);
+  addToQueue(adjacentList[source], visitedList, queue);
   while (queue.length != 0) {
     const currentPath = queue.shift();
     if (currentPath === target) return true;
     visitedList.push(currentPath);
-    if (adjacentList[currentPath])
-      addToQueue(adjacentList[currentPath], visitedList, queue);
+    addToQueue(adjacentList[currentPath], visitedList, queue);
   }
   return false;
 };
