@@ -25,12 +25,14 @@ const bfs = (pairs, source, target) => {
   const adjacentList = createList(pairs);
   const visitedList = [];
   const queue = [];
-  queue.push(source);
+  if (adjacentList[source])
+    addToQueue(adjacentList[source], visitedList, queue);
   while (queue.length != 0) {
     const currentPath = queue.shift();
     if (currentPath === target) return true;
     visitedList.push(currentPath);
-    if(adjacentList[currentPath]) addToQueue(adjacentList[currentPath],visitedList,queue);
+    if (adjacentList[currentPath])
+      addToQueue(adjacentList[currentPath], visitedList, queue);
   }
   return false;
 };
